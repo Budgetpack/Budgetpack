@@ -1,12 +1,9 @@
 package com.sansi.acerbilgisayar.budgetpack;
 
-import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -17,12 +14,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity{
