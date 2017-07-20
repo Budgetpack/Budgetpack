@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -16,7 +16,40 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.066"/>
+        app:layout_constraintVertical_bias="0.066"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="42dp"/>
+
+    <EditText
+        android:id="@+id/budgetTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Please Enter Your Budget"
+        android:inputType="numberSigned"
+        tools:layout_editor_absoluteX="84dp"
+        tools:layout_editor_absoluteY="83dp"
+        android:layout_marginTop="46dp"
+        android:layout_below="@+id/welcomeTxt"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:id="@+id/findBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="70dp"
+        android:text="FIND ME A PLAN"/>
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/budgetTxt"
+        android:layout_toEndOf="@+id/budgetTxt"
+        android:layout_marginStart="17dp"/>
 
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>
