@@ -1,0 +1,43 @@
+package com.sansi.acerbilgisayar.budgetpack;
+
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+
+import com.github.paolorotolo.appintro.AppIntro;
+import com.github.paolorotolo.appintro.AppIntroFragment;
+
+
+/**
+ * Created by Acer Bilgisayar on 20.7.2017.
+ */
+
+
+public class Intro extends AppIntro {
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        addSlide(AppIntroFragment.newInstance("title 1","descrp 1",R.drawable.backpack , Color.parseColor("#000000")));
+        addSlide(AppIntroFragment.newInstance("title 2", "descrpt 2", R.drawable.backpack, Color.parseColor(("#000000"))));
+
+    }
+    @Override
+    public void onSkipPressed(Fragment currentFragment) {
+        super.onSkipPressed(currentFragment);
+        // Do something when users tap on Skip button.
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onDonePressed(Fragment currentFragment) {
+        super.onDonePressed(currentFragment);
+        // Do something when users tap on Done button.
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+
+}
