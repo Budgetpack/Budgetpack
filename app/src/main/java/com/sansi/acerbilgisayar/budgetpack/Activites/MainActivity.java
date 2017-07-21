@@ -1,12 +1,10 @@
-package com.sansi.acerbilgisayar.budgetpack;
+package com.sansi.acerbilgisayar.budgetpack.Activites;
 
-import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -17,12 +15,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.DateFormat;
+import com.sansi.acerbilgisayar.budgetpack.R;
+
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity{
@@ -41,6 +37,8 @@ public class MainActivity extends AppCompatActivity{
     private String str;
     private String curr;
     private int myyear, mymonth, myday;
+    private int startYear, startMonth, startDay;
+    private int endYear, endMonth, endDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +68,16 @@ public class MainActivity extends AppCompatActivity{
                 str = budgetText.getText().toString();
                 Toast msg = Toast.makeText(getBaseContext(),"Budget:"+str+" Currency:"+curr, Toast.LENGTH_SHORT);
                 msg.show();
+                /*Log.e("startday = ", " " + startDay);
+                Log.e("startmonth = ", " " + startMonth);
+                Log.e("startyear = ", " " + startYear);
+                Log.e("endday = ", " " + endDay);
+                Log.e("endmonth = ", " " + endMonth);
+                Log.e("endyear = ", " " + endYear);*/
+                Intent intent = new Intent(MainActivity.this, FindPlan.class);
+                intent.putExtra("budget", str);
+                intent.putExtra("currency", curr);
+                startActivity(intent);
             }
         });
         
@@ -85,8 +93,12 @@ public class MainActivity extends AppCompatActivity{
                         calendar.set(Calendar.YEAR, year);
                         calendar.set(Calendar.MONTH, monthOfYear);
                         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                        String myFormat = "dd/MM/yy"; //In which you need put here
+                        String myFormat = "dd/MM/yy";
                         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+                        startDay = dayOfMonth;
+                        startMonth = monthOfYear;
+                        startYear = year;
 
                         startDateText.setText(sdf.format(calendar.getTime()));
                     }
@@ -110,8 +122,12 @@ public class MainActivity extends AppCompatActivity{
                         calendar.set(Calendar.YEAR, year);
                         calendar.set(Calendar.MONTH, monthOfYear);
                         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                        String myFormat = "dd/MM/yy"; //In which you need put here
+                        String myFormat = "dd/MM/yy";
                         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+                        endDay = dayOfMonth;
+                        endMonth = monthOfYear;
+                        endYear = year;
 
                         endDateText.setText(sdf.format(calendar.getTime()));
                     }
@@ -124,10 +140,10 @@ public class MainActivity extends AppCompatActivity{
 
             }
         });
+
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, currencies);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         currencySpinner.setAdapter(dataAdapter);
-
         currencySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

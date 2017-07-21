@@ -1,4 +1,4 @@
-package com.sansi.acerbilgisayar.budgetpack;
+package com.sansi.acerbilgisayar.budgetpack.Activites;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 
 import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntroFragment;
+import com.sansi.acerbilgisayar.budgetpack.R;
 
 
 /**
@@ -19,7 +20,7 @@ public class Intro extends AppIntro {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addSlide(AppIntroFragment.newInstance("title 1","descrp 1",R.drawable.backpack , Color.parseColor("#000000")));
+        addSlide(AppIntroFragment.newInstance("title 1","descrp 1", R.drawable.backpack , Color.parseColor("#000000")));
         addSlide(AppIntroFragment.newInstance("title 2", "descrpt 2", R.drawable.backpack, Color.parseColor(("#000000"))));
 
     }
