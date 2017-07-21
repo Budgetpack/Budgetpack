@@ -1,4 +1,4 @@
-package com.sansi.acerbilgisayar.budgetpack;
+package com.sansi.acerbilgisayar.budgetpack.Fragments;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
