@@ -15,4 +15,28 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
         android:text="TextView"/>
+
+    <TextView
+        android:id="@+id/startDateTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/budgetTxt"
+        android:layout_below="@+id/budgetTxt"
+        android:text="TextView"/>
+
+    <TextView
+        android:id="@+id/endDateTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/startDateTxt"
+        android:layout_below="@+id/startDateTxt"
+        android:text="TextView"/>
+
+    <TextView
+        android:id="@+id/typeTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/endDateTxt"
+        android:layout_below="@+id/endDateTxt"
+        android:text="TextView"/>
 </RelativeLayout>

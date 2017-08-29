@@ -95,5 +95,13 @@
         android:layout_alignStart="@+id/endDateButton"
         android:text="_  /  _  / _"/>
 
+    <Spinner
+        android:id="@+id/typeSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/endDateTxt"
+        android:layout_centerHorizontal="true"/>
+
 
 </RelativeLayout>
