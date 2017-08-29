@@ -39,4 +39,12 @@
         android:layout_alignStart="@+id/endDateTxt"
         android:layout_below="@+id/endDateTxt"
         android:text="TextView"/>
+
+    <TextView
+        android:id="@+id/diffTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/typeTxt"
+        android:layout_below="@+id/typeTxt"
+        android:text="TextView"/>
 </RelativeLayout>
