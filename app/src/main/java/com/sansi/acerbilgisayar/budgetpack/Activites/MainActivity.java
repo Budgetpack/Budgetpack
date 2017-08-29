@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity{
     Button findplanButton;
     Spinner currencySpinner;
     Spinner typeSpinner;
-    Calendar calendar;
+    Calendar calendar, calendar1, calendar2;
     ImageButton startDateButton;
     ImageButton endDateButton;
     TextView startDateText;
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity{
     private String str;
     private String curr;
     private String type;
-    private int myyear, mymonth, myday;
+
     private int startYear, startMonth, startDay;
     private int endYear, endMonth, endDay;
 
@@ -64,10 +64,6 @@ public class MainActivity extends AppCompatActivity{
 
         welcomeText.setText("Welcome to Budgetpack!");
         calendar = Calendar.getInstance();
-        myyear = calendar.get(Calendar.YEAR);
-        mymonth = calendar.get(Calendar.MONTH);
-        myday = calendar.get(Calendar.DAY_OF_MONTH);
-
 
         findplanButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,12 +73,16 @@ public class MainActivity extends AppCompatActivity{
                 Toast msg = Toast.makeText(getBaseContext(),"Budget:"+str+" Currency:"+curr, Toast.LENGTH_SHORT);
                 msg.show();
 
-                Log.e("startday = ", " " + startDay);
+                /*Log.e("startdate:",""+calendar1.getTime());
+                Log.e("enddate:",""+calendar2.getTime());*/
+                long diffInDays = (calendar2.getTimeInMillis() - calendar1.getTimeInMillis() ) / (1000 * 60 * 60 * 24) ;
+                //Log.e("diff:",""+diffInDays);
+                /*Log.e("startday = ", " " + startDay);
                 Log.e("startmonth = ", " " + startMonth);
                 Log.e("startyear = ", " " + startYear);
                 Log.e("endday = ", " " + endDay);
                 Log.e("endmonth = ", " " + endMonth);
-                Log.e("endyear = ", " " + endYear);
+                Log.e("endyear = ", " " + endYear);*/
 
                 Intent intent = new Intent(MainActivity.this, FindPlan.class);
                 intent.putExtra("budget", str);
@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity{
                 intent.putExtra("endday", endDay);
                 intent.putExtra("endmonth", endMonth);
                 intent.putExtra("endyear", endYear);
+                intent.putExtra("diff", diffInDays);
                 startActivity(intent);
                 /*SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 SharedPreferences.Editor editor = preferences.edit();
@@ -111,9 +112,10 @@ public class MainActivity extends AppCompatActivity{
                     public void onDateSet(DatePicker view, int year, int monthOfYear,
                                           int dayOfMonth) {
                         // TODO Auto-generated method stub
-                        calendar.set(Calendar.YEAR, year);
-                        calendar.set(Calendar.MONTH, monthOfYear);
-                        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                        calendar1= Calendar.getInstance();
+                        calendar1.set(Calendar.YEAR, year);
+                        calendar1.set(Calendar.MONTH, monthOfYear);
+                        calendar1.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                         String myFormat = "dd/MM/yy";
                         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
@@ -121,7 +123,8 @@ public class MainActivity extends AppCompatActivity{
                         startMonth = monthOfYear;
                         startYear = year;
 
-                        startDateText.setText(sdf.format(calendar.getTime()));
+                        startDateText.setText(sdf.format(calendar1.getTime()));
+
                     }
 
                 };
@@ -140,9 +143,10 @@ public class MainActivity extends AppCompatActivity{
                     public void onDateSet(DatePicker view, int year, int monthOfYear,
                                           int dayOfMonth) {
                         // TODO Auto-generated method stub
-                        calendar.set(Calendar.YEAR, year);
-                        calendar.set(Calendar.MONTH, monthOfYear);
-                        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                        calendar2 = Calendar.getInstance();
+                        calendar2.set(Calendar.YEAR, year);
+                        calendar2.set(Calendar.MONTH, monthOfYear);
+                        calendar2.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                         String myFormat = "dd/MM/yy";
                         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
@@ -150,13 +154,14 @@ public class MainActivity extends AppCompatActivity{
                         endMonth = monthOfYear;
                         endYear = year;
 
-                        endDateText.setText(sdf.format(calendar.getTime()));
+                        endDateText.setText(sdf.format(calendar2.getTime()));
+
                     }
 
                 };
-                new DatePickerDialog(MainActivity.this, date, calendar
-                        .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-                        calendar.get(Calendar.DAY_OF_MONTH)).show();
+                new DatePickerDialog(MainActivity.this, date, calendar1
+                        .get(Calendar.YEAR), calendar1.get(Calendar.MONTH),
+                        calendar1.get(Calendar.DAY_OF_MONTH)).show();
 
 
             }

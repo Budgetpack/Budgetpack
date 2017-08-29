@@ -13,7 +13,7 @@ public class FindPlan extends AppCompatActivity {
     TextView budgetText;
     TextView startDateText;
     TextView endDateText;
-    TextView typeText;
+    TextView typeText, diffText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +24,7 @@ public class FindPlan extends AppCompatActivity {
         startDateText = (TextView) findViewById(R.id.startDateTxt);
         endDateText = (TextView) findViewById(R.id.endDateTxt);
         typeText = (TextView) findViewById(R.id.typeTxt);
+        diffText = (TextView) findViewById(R.id.diffTxt);
 
         Bundle b = getIntent().getExtras();
 
@@ -39,17 +40,19 @@ public class FindPlan extends AppCompatActivity {
         int endMonth = b.getInt("endmonth");
         int endYear = b.getInt("endyear");
 
-        Log.e("startday = ", " " + startDay);
+        long diff = b.getLong("diff");
+        /*Log.e("startday = ", " " + startDay);
         Log.e("startmonth = ", " " + startMonth);
         Log.e("startyear = ", " " + startYear);
         Log.e("endday = ", " " + endDay);
         Log.e("endmonth = ", " " + endMonth);
-        Log.e("endyear = ", " " + endYear);
+        Log.e("endyear = ", " " + endYear);*/
 
         budgetText.setText("Your budget is "+budget+" "+currency);
         startDateText.setText("Starting date of your trip: "+startDay+"/"+startMonth+"/"+startYear);
         endDateText.setText("Ending date of your trip: "+endDay+"/"+endMonth+"/"+endYear);
         typeText.setText("Preferred type of your trip: "+type);
+        diffText.setText("Days: "+diff);
 
     }
 }
