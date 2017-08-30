@@ -47,4 +47,13 @@
         android:layout_alignEnd="@+id/typeTxt"
         android:layout_below="@+id/typeTxt"
         android:text="TextView"/>
+
+    <TextView
+        android:id="@+id/firebaseTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/diffTxt"
+        android:layout_below="@+id/diffTxt"
+        android:layout_marginTop="126dp"
+        android:text="TextView"/>
 </RelativeLayout>

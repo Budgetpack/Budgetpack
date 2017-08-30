@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "319887151403",
+    "firebase_url": "https://budgetpack-e5d72.firebaseio.com",
+    "project_id": "budgetpack-e5d72",
+    "storage_bucket": "budgetpack-e5d72.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:319887151403:android:7bafe2a9a6ce2653",
+        "android_client_info": {
+          "package_name": "com.sansi.acerbilgisayar.budgetpack"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "319887151403-ehov06n23p1tjosff4af2ncl2qoqtmn9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sansi.acerbilgisayar.budgetpack",
+            "certificate_hash": "9caf7dba2a41dddcdc0f3b5c8bf5786f190df72a"
+          }
+        },
+        {
+          "client_id": "319887151403-tu22odikoejl5bpvt4agjo16i7u56277.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5Miae9mBx3-8CikFcpyCoTaYhiyBNG0c"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "319887151403-tu22odikoejl5bpvt4agjo16i7u56277.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
