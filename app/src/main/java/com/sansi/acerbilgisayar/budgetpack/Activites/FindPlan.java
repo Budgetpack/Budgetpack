@@ -9,6 +9,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.sansi.acerbilgisayar.budgetpack.R;
 
@@ -19,6 +20,11 @@ public class FindPlan extends AppCompatActivity {
     TextView startDateText;
     TextView endDateText;
     TextView typeText, diffText, firebaseText;
+
+    String budget, currency, type;
+    int startDay, startMonth, startYear, endDay, endMonth, endYear;
+    long diff;
+    int dailyBudget;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
@@ -37,19 +43,19 @@ public class FindPlan extends AppCompatActivity {
 
         Bundle b = getIntent().getExtras();
 
-        String budget = b.getString("budget");
-        String currency = b.getString("currency");
-        String type = b.getString("type");
+        budget = b.getString("budget");
+        currency = b.getString("currency");
+        type = b.getString("type");
 
-        int startDay = b.getInt("startDay");
-        int startMonth = b.getInt("startmonth");
-        int startYear = b.getInt("startyear");
+        startDay = b.getInt("startDay");
+        startMonth = b.getInt("startmonth");
+        startYear = b.getInt("startyear");
 
-        int endDay = b.getInt("endday");
-        int endMonth = b.getInt("endmonth");
-        int endYear = b.getInt("endyear");
+        endDay = b.getInt("endday");
+        endMonth = b.getInt("endmonth");
+        endYear = b.getInt("endyear");
 
-        long diff = b.getLong("diff");
+        diff = b.getLong("diff");
         /*Log.e("startday = ", " " + startDay);
         Log.e("startmonth = ", " " + startMonth);
         Log.e("startyear = ", " " + startYear);
@@ -57,13 +63,34 @@ public class FindPlan extends AppCompatActivity {
         Log.e("endmonth = ", " " + endMonth);
         Log.e("endyear = ", " " + endYear);*/
 
+        dailyBudget = (int) calculateDailyBudget(budget, diff);
+        //Log.e("daily budget :",""+dailyBudget);
+
         budgetText.setText("Your budget is "+budget+" "+currency);
         startDateText.setText("Starting date of your trip: "+startDay+"/"+startMonth+"/"+startYear);
         endDateText.setText("Ending date of your trip: "+endDay+"/"+endMonth+"/"+endYear);
         typeText.setText("Preferred type of your trip: "+type+"");
         diffText.setText("Days: "+diff+"");
 
-        myRef.child("Cities").child("Barcelona").addValueEventListener(new ValueEventListener() {
+        Query myQuery = myRef.child("Cities");
+        myQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    if(Integer.valueOf(child.child("budget").getValue().toString()) < dailyBudget){
+                        Log.e("Cities: ", ""+child.getKey()+" Budget: "+child.child("budget").getValue());
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+        /*myRef.child("Cities").child("Barcelona").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Long budget = (Long) dataSnapshot.child("budget").getValue();
@@ -74,8 +101,13 @@ public class FindPlan extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
                 Log.e("firebase error log", "");
             }
-        });
+        });*/
 
 
+    }
+    public double calculateDailyBudget(String b, long diff){
+        int budget = Integer.parseInt(b);
+
+        return (double) budget/diff;
     }
 }
