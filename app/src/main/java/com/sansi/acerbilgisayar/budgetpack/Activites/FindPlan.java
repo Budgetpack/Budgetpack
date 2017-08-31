@@ -9,6 +9,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.sansi.acerbilgisayar.budgetpack.R;
 
@@ -71,8 +72,25 @@ public class FindPlan extends AppCompatActivity {
         typeText.setText("Preferred type of your trip: "+type+"");
         diffText.setText("Days: "+diff+"");
 
+        Query myQuery = myRef.child("Cities");
+        myQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    if(Integer.valueOf(child.child("budget").getValue().toString()) < dailyBudget){
+                        Log.e("Cities: ", ""+child.getKey()+" Budget: "+child.child("budget").getValue());
+                    }
+                }
+            }
 
-        myRef.child("Cities").child("Barcelona").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+        /*myRef.child("Cities").child("Barcelona").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Long budget = (Long) dataSnapshot.child("budget").getValue();
@@ -83,7 +101,7 @@ public class FindPlan extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
                 Log.e("firebase error log", "");
             }
-        });
+        });*/
 
 
     }
