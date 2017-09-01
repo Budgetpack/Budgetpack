@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity{
 
     private int startYear, startMonth, startDay;
     private int endYear, endMonth, endDay;
+    long diffInDays;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,12 +71,10 @@ public class MainActivity extends AppCompatActivity{
             public void onClick(View v) {
 
                 str = budgetText.getText().toString();
-                Toast msg = Toast.makeText(getBaseContext(),"Budget:"+str+" Currency:"+curr, Toast.LENGTH_SHORT);
-                msg.show();
+
 
                 /*Log.e("startdate:",""+calendar1.getTime());
                 Log.e("enddate:",""+calendar2.getTime());*/
-                long diffInDays = (calendar2.getTimeInMillis() - calendar1.getTimeInMillis() ) / (1000 * 60 * 60 * 24) ;
                 //Log.e("diff:",""+diffInDays);
                 /*Log.e("startday = ", " " + startDay);
                 Log.e("startmonth = ", " " + startMonth);
@@ -84,18 +83,32 @@ public class MainActivity extends AppCompatActivity{
                 Log.e("endmonth = ", " " + endMonth);
                 Log.e("endyear = ", " " + endYear);*/
 
-                Intent intent = new Intent(MainActivity.this, FindPlan.class);
-                intent.putExtra("budget", str);
-                intent.putExtra("currency", curr);
-                intent.putExtra("type", type);
-                intent.putExtra("startDay", startDay);
-                intent.putExtra("startmonth", startMonth);
-                intent.putExtra("startyear", startYear);
-                intent.putExtra("endday", endDay);
-                intent.putExtra("endmonth", endMonth);
-                intent.putExtra("endyear", endYear);
-                intent.putExtra("diff", diffInDays);
-                startActivity(intent);
+                if(inputCheck(str, startDay, endDay)) {
+
+                    Intent intent = new Intent(MainActivity.this, FindPlan.class);
+                    intent.putExtra("budget", str);
+                    intent.putExtra("currency", curr);
+                    intent.putExtra("type", type);
+                    intent.putExtra("startDay", startDay);
+                    intent.putExtra("startmonth", startMonth);
+                    intent.putExtra("startyear", startYear);
+                    intent.putExtra("endday", endDay);
+                    intent.putExtra("endmonth", endMonth);
+                    intent.putExtra("endyear", endYear);
+                    diffInDays = (calendar2.getTimeInMillis() - calendar1.getTimeInMillis() ) / (1000 * 60 * 60 * 24) ;
+                    if(diffInDays==0){
+                        diffInDays++;
+                        intent.putExtra("diff", diffInDays);
+                        startActivity(intent);
+                    }
+                    else if(diffInDays < 0){
+                        Toast msg = Toast.makeText(getBaseContext(),"Ending date is smaller than starting date", Toast.LENGTH_SHORT);
+                        msg.show();
+                    }else {
+                        intent.putExtra("diff", diffInDays);
+                        startActivity(intent);
+                    }
+                }
                 /*SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString("startday", startDay);*/
@@ -159,10 +172,14 @@ public class MainActivity extends AppCompatActivity{
                     }
 
                 };
-                new DatePickerDialog(MainActivity.this, date, calendar1
-                        .get(Calendar.YEAR), calendar1.get(Calendar.MONTH),
-                        calendar1.get(Calendar.DAY_OF_MONTH)).show();
-
+                if(startDay != 0) {
+                    new DatePickerDialog(MainActivity.this, date, calendar1
+                            .get(Calendar.YEAR), calendar1.get(Calendar.MONTH),
+                            calendar1.get(Calendar.DAY_OF_MONTH)).show();
+                }else{
+                    Toast msg = Toast.makeText(getBaseContext(),"Ending Date Input Error", Toast.LENGTH_SHORT);
+                    msg.show();
+                }
 
             }
         });
@@ -199,6 +216,24 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
+    }
+    public boolean inputCheck(String b, int startday, int endday){
+        if(b.equals("")){
+            Toast msg = Toast.makeText(getBaseContext(),"Budget Input Error", Toast.LENGTH_SHORT);
+            msg.show();
+            return false;
+        }
+        else if(startday == 0){
+            Toast msg = Toast.makeText(getBaseContext(),"Starting Date Input Error", Toast.LENGTH_SHORT);
+            msg.show();
+            return false;
+        }
+        else if(endday == 0){
+            Toast msg = Toast.makeText(getBaseContext(),"Ending Date Input Error", Toast.LENGTH_SHORT);
+            msg.show();
+            return false;
+        }
+        return true;
     }
 
 }
