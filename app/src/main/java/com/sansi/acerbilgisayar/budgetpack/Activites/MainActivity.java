@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity{
 
     private int startYear, startMonth, startDay;
     private int endYear, endMonth, endDay;
+    long diffInDays;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,9 +95,19 @@ public class MainActivity extends AppCompatActivity{
                     intent.putExtra("endday", endDay);
                     intent.putExtra("endmonth", endMonth);
                     intent.putExtra("endyear", endYear);
-                    long diffInDays = (calendar2.getTimeInMillis() - calendar1.getTimeInMillis() ) / (1000 * 60 * 60 * 24) ;
-                    intent.putExtra("diff", diffInDays);
-                    startActivity(intent);
+                    diffInDays = (calendar2.getTimeInMillis() - calendar1.getTimeInMillis() ) / (1000 * 60 * 60 * 24) ;
+                    if(diffInDays==0){
+                        diffInDays++;
+                        intent.putExtra("diff", diffInDays);
+                        startActivity(intent);
+                    }
+                    else if(diffInDays < 0){
+                        Toast msg = Toast.makeText(getBaseContext(),"Ending date is smaller than starting date", Toast.LENGTH_SHORT);
+                        msg.show();
+                    }else {
+                        intent.putExtra("diff", diffInDays);
+                        startActivity(intent);
+                    }
                 }
                 /*SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 SharedPreferences.Editor editor = preferences.edit();
