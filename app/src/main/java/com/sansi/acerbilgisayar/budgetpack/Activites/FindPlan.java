@@ -78,7 +78,14 @@ public class FindPlan extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     if(Integer.valueOf(child.child("budget").getValue().toString()) < dailyBudget){
-                        Log.e("Cities: ", ""+child.getKey()+" Budget: "+child.child("budget").getValue());
+
+
+                        for(DataSnapshot child2 : child.child("cityChar").getChildren()) {
+                            if(child2.getKey().equals(type.toLowerCase())) {
+                                Log.e("Cities: ", "" + child.getKey() + " Budget: " + child.child("budget").getValue());
+                                Log.e("cityChar ", "" + child2.getKey());
+                            }
+                        }
                     }
                 }
             }
