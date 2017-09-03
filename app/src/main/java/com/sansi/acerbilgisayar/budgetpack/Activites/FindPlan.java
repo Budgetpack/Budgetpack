@@ -1,6 +1,8 @@
 package com.sansi.acerbilgisayar.budgetpack.Activites;
 
+import android.content.SharedPreferences;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v4.media.VolumeProviderCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -37,6 +39,7 @@ public class FindPlan extends AppCompatActivity {
     int dailyBudget;
     int deneme = 9;
 
+
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
 
@@ -68,9 +71,14 @@ public class FindPlan extends AppCompatActivity {
 
         readFromDatabase();
 
+        Log.e("cities array size",""+cities.size());
+        for(int i =0;i<cities.size();i++){
+            Log.e("Cities: ",""+cities.get(i));
+        }
         CityArrayAdapter myAdapter=new CityArrayAdapter(this, cities);
         myList.setAdapter(myAdapter);
-        cities.add(new City(""+deneme));
+
+
 
     }
 
@@ -85,20 +93,18 @@ public class FindPlan extends AppCompatActivity {
         myQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     if(Integer.valueOf(child.child("budget").getValue().toString()) < dailyBudget){
-
                         for(DataSnapshot child2 : child.child("cityChar").getChildren()) {
                             if(child2.getKey().equals(type.toLowerCase())) {
-                                 Log.e("Cities: ", "" + child.getKey() + " Budget: " + child.child("budget").getValue());
-                                 Log.e("cityChar ", "" + child2.getKey());
+                                 //Log.e("Cities: ", "" + child.getKey() + " Budget: " + child.child("budget").getValue());
+                                 //Log.e("cityChar ", "" + child2.getKey());
+                                cities.add(new City(child.getKey()));
                             }
                         }
                     }
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
