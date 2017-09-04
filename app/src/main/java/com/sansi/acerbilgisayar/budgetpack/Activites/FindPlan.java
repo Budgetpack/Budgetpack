@@ -2,6 +2,7 @@ package com.sansi.acerbilgisayar.budgetpack.Activites;
 
 import android.content.SharedPreferences;
 import android.os.Handler;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.v4.media.VolumeProviderCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +27,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.security.auth.callback.Callback;
 
@@ -43,13 +46,15 @@ public class FindPlan extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
 
+    ListView myList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_plan);
 
-        final ListView myList = (ListView) findViewById(R.id.liste);
+        myList = (ListView) findViewById(R.id.liste);
 
         Bundle b = getIntent().getExtras();
         budget = b.getString("budget");
@@ -71,15 +76,16 @@ public class FindPlan extends AppCompatActivity {
 
         readFromDatabase();
 
-        Log.e("cities array size",""+cities.size());
-        for(int i =0;i<cities.size();i++){
-            Log.e("Cities: ",""+cities.get(i));
-        }
-        CityArrayAdapter myAdapter=new CityArrayAdapter(this, cities);
-        myList.setAdapter(myAdapter);
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                for(int i=0;i<cities.size();i++) {
+                    Log.e("delay log", "" + cities.get(i));
+                    mHandler.obtainMessage(1).sendToTarget();
+                }
 
-
-
+            }
+        }, 3000);
     }
 
     public double calculateDailyBudget(String b, long diff){
@@ -97,7 +103,7 @@ public class FindPlan extends AppCompatActivity {
                     if(Integer.valueOf(child.child("budget").getValue().toString()) < dailyBudget){
                         for(DataSnapshot child2 : child.child("cityChar").getChildren()) {
                             if(child2.getKey().equals(type.toLowerCase())) {
-                                 //Log.e("Cities: ", "" + child.getKey() + " Budget: " + child.child("budget").getValue());
+                                 Log.e("Cities: ", "" + child.getKey() + " Budget: " + child.child("budget").getValue());
                                  //Log.e("cityChar ", "" + child2.getKey());
                                 cities.add(new City(child.getKey()));
                             }
@@ -111,5 +117,13 @@ public class FindPlan extends AppCompatActivity {
             }
         });
     }
+
+    public Handler mHandler = new Handler(){
+        public void handleMessage(Message msg){
+            CityArrayAdapter myAdapter=new CityArrayAdapter(FindPlan.this, cities);
+            myList.setAdapter(myAdapter);
+        }
+    };
+
 
 }
