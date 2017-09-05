@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatCallback;
 import android.support.v7.view.ActionMode;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.ListView;
 
@@ -18,8 +20,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-//import com.sansi.acerbilgisayar.budgetpack.Adapters.CityArrayAdapter;
-import com.sansi.acerbilgisayar.budgetpack.Adapters.CityArrayAdapter;
+
+
+import com.sansi.acerbilgisayar.budgetpack.Adapters.RecyclerViewAdapter;
 import com.sansi.acerbilgisayar.budgetpack.Classes.City;
 import com.sansi.acerbilgisayar.budgetpack.R;
 
@@ -42,19 +45,26 @@ public class FindPlan extends AppCompatActivity {
     int dailyBudget;
     int deneme = 9;
 
+    private LinearLayoutManager lLayout;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
 
     ListView myList;
+    RecyclerView rView;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_find_plan);
+        //setContentView(R.layout.activity_find_plan);
+        setContentView(R.layout.find_plan);
 
         myList = (ListView) findViewById(R.id.liste);
+        lLayout = new LinearLayoutManager(this);
+
+        rView = (RecyclerView)findViewById(R.id.recycler_view);
+        rView.setLayoutManager(lLayout);
 
         Bundle b = getIntent().getExtras();
         budget = b.getString("budget");
@@ -76,7 +86,7 @@ public class FindPlan extends AppCompatActivity {
 
         readFromDatabase();
 
-        new Timer().schedule(new TimerTask() {
+       new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
                 for(int i=0;i<cities.size();i++) {
@@ -120,8 +130,10 @@ public class FindPlan extends AppCompatActivity {
 
     public Handler mHandler = new Handler(){
         public void handleMessage(Message msg){
-            CityArrayAdapter myAdapter=new CityArrayAdapter(FindPlan.this, cities);
-            myList.setAdapter(myAdapter);
+
+            RecyclerViewAdapter rcAdapter = new RecyclerViewAdapter(FindPlan.this, cities);
+            rView.setAdapter(rcAdapter);
+
         }
     };
 
