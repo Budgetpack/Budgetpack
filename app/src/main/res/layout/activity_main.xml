@@ -2,10 +2,25 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/backpack4_1"
+        android:adjustViewBounds="true"
+        android:alpha="1.0"/>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.sansi.acerbilgisayar.budgetpack.Activites.MainActivity">
+
 
     <TextView
         android:id="@+id/welcomeTxt"
@@ -17,6 +32,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.066"
+        android:textColor="@color/mainText"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="42dp"/>
@@ -30,6 +46,7 @@
         android:inputType="numberSigned"
         tools:layout_editor_absoluteX="84dp"
         tools:layout_editor_absoluteY="83dp"
+        android:textColor="@color/mainText"
         android:layout_marginTop="46dp"
         android:layout_below="@+id/welcomeTxt"
         android:layout_alignEnd="@+id/findBtn"/>
@@ -58,6 +75,7 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/budgetTxt"
         android:layout_below="@+id/budgetTxt"
+        android:textColor="@color/mainText"
         android:layout_marginTop="26dp"
         android:text="Select your starting and ending date:"/>
 
@@ -84,6 +102,7 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/startDateButton"
         android:layout_below="@+id/startDateButton"
+        android:textColor="@color/mainText"
         android:layout_marginTop="21dp"
         android:text="_  /  _  / _"/>
 
@@ -93,15 +112,29 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/startDateTxt"
         android:layout_alignStart="@+id/endDateButton"
+        android:textColor="@color/mainText"
         android:text="_  /  _  / _"/>
 
     <Spinner
         android:id="@+id/typeSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/endDateTxt"
+        android:textColor="@color/mainText"
+        android:layout_below="@+id/charTxt"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="31dp"/>
+
+    <TextView
+        android:id="@+id/charTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select the main characteristic of your trip:"
+        android:textColor="@color/mainText"
+        android:layout_marginTop="26dp"
+        android:layout_below="@+id/startDateTxt"
         android:layout_centerHorizontal="true"/>
 
+
+</RelativeLayout>
 
 </RelativeLayout>
