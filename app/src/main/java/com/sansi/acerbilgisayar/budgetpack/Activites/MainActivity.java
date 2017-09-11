@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity{
     TextView endDateText;
 
     private String[] currencies = {"USD", "TRY", "EUR"};
-    private String[] types = {"Doesn't matter", "Nightlife", "Historical", "Cuisine", "Leisure", "Religion", "Sightseeing", "Cultural"};
+    private String[] types = {"Does not matter", "Nightlife", "Historical", "Cuisine", "Leisure", "Religion", "Sightseeing", "Cultural"};
     private String str;
     private String curr;
     private String type;
