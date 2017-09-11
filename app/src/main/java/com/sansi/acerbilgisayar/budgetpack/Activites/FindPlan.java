@@ -1,5 +1,6 @@
 package com.sansi.acerbilgisayar.budgetpack.Activites;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -87,9 +90,16 @@ public class FindPlan extends AppCompatActivity {
                     mHandler.obtainMessage(1).sendToTarget();
                     sHandler.obtainMessage(1).sendToTarget();
                 }
-
+                Log.e("ITEM COUNT",""+cities.size());
+                if(isListEmpty()){
+                    Log.e("the list is empty",".");
+                    emptyListHandler.obtainMessage(1).sendToTarget();
+                }else{
+                    Log.e("the list is NOT empty",".");
+                }
             }
         }, 3000);
+
 
     }
 
@@ -137,5 +147,20 @@ public class FindPlan extends AppCompatActivity {
             spinner.setVisibility(View.GONE);
         }
     };
+    public  Handler emptyListHandler = new Handler(){
+        public void handleMessage(Message msg){
+            Toast.makeText(getBaseContext(),"NO CITY FOUND",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(FindPlan.this,MainActivity.class);
+            startActivity(intent);
+        }
+    };
+
+    public boolean isListEmpty(){
+        if(cities.size() == 0){
+            return true;
+        }else {
+            return false;
+        }
+    }
 
 }
