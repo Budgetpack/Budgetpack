@@ -75,7 +75,7 @@ public class FindPlan extends AppCompatActivity {
         diff = b.getLong("diff");
 
         dailyBudget = (int) calculateDailyBudget(budget, diff);
-        Log.e("daily budget :",""+dailyBudget);
+        //Log.e("daily budget :",""+dailyBudget);
         spinner.setVisibility(View.VISIBLE);
         readFromDatabase();
 
@@ -83,7 +83,7 @@ public class FindPlan extends AppCompatActivity {
             @Override
             public void run() {
                 for(int i=0;i<cities.size();i++) {
-                    Log.e("delay log", "" + cities.get(i));
+                    //Log.e("delay log", "" + cities.get(i));
                     mHandler.obtainMessage(1).sendToTarget();
                     sHandler.obtainMessage(1).sendToTarget();
                 }
@@ -105,10 +105,13 @@ public class FindPlan extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    if(Integer.valueOf(child.child("budget").getValue().toString()) < dailyBudget){
+                    if(Integer.valueOf(child.child("budget").getValue().toString()) <= dailyBudget){
+                        if(type.equals("Does not matter")){
+                            cities.add(new City(child.getKey()));
+                        }
                         for(DataSnapshot child2 : child.child("cityChar").getChildren()) {
                             if(child2.getKey().equals(type.toLowerCase())) {
-                                 Log.e("Cities: ", "" + child.getKey() + " Budget: " + child.child("budget").getValue());
+                                 //Log.e("Cities: ", "" + child.getKey() + " Budget: " + child.child("budget").getValue());
                                  //Log.e("cityChar ", "" + child2.getKey());
                                 cities.add(new City(child.getKey()));
                             }
