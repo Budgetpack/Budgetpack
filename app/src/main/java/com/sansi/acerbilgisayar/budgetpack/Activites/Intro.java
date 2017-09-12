@@ -26,8 +26,8 @@ public class Intro extends AppIntro {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
 
-        addSlide(AppIntroFragment.newInstance("title 1","descrp 1", R.drawable.backpack , Color.parseColor("#000000")));
-        addSlide(AppIntroFragment.newInstance("title 2", "descrpt 2", R.drawable.backpack, Color.parseColor(("#000000"))));
+        addSlide(AppIntroFragment.newInstance("title 1","descrp 1", R.drawable.backpack2 , Color.parseColor("#2282FF")));
+        addSlide(AppIntroFragment.newInstance("title 2", "descrpt 2", R.drawable.backpack3, Color.parseColor(("#FFFFFF"))));
 
 
     }
