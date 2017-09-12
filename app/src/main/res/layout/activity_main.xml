@@ -58,7 +58,9 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="70dp"
-        android:text="FIND ME A PLAN"/>
+        android:text="FIND ME A PLAN"
+        android:textColor="@color/mainText"
+        app:backgroundTint="@color/colorAccent"/>
 
     <Spinner
         android:id="@+id/spinner"
