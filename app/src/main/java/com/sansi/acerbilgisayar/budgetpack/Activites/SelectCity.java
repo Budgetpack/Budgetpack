@@ -1,7 +1,9 @@
 package com.sansi.acerbilgisayar.budgetpack.Activites;
 
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -44,6 +46,11 @@ public class SelectCity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_select_city);
 
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("OPTION", "B");
+        editor.apply();
+
         lLayout = new LinearLayoutManager(this);
 
         rView = (RecyclerView)findViewById(R.id.recycler_view);
@@ -52,6 +59,7 @@ public class SelectCity extends AppCompatActivity {
         spinner = (ProgressBar) findViewById(R.id.progressBar);
         spinner.setVisibility(View.VISIBLE);
         readFromDatabase();
+
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
@@ -63,6 +71,7 @@ public class SelectCity extends AppCompatActivity {
                 Log.e("ITEM COUNT",""+cities.size());
             }
         }, 3000);
+
     }
     public void readFromDatabase(){
         Query myQuery = myRef.child("Cities");

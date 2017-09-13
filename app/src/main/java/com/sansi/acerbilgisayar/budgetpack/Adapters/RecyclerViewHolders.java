@@ -1,11 +1,14 @@
 package com.sansi.acerbilgisayar.budgetpack.Adapters;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sansi.acerbilgisayar.budgetpack.Activites.SelectCity;
 import com.sansi.acerbilgisayar.budgetpack.R;
 
 /**
@@ -26,6 +29,8 @@ public class RecyclerViewHolders extends RecyclerView.ViewHolder implements View
 
     @Override
     public void onClick(View view) {
-        Toast.makeText(view.getContext(), "Clicked Country Position = " + getPosition(), Toast.LENGTH_SHORT).show();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(view.getContext());
+        String optionMode = preferences.getString("OPTION", "N/A");
+        Toast.makeText(view.getContext(), "OPTION " +optionMode, Toast.LENGTH_SHORT).show();
     }
 }
