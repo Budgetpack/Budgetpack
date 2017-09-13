@@ -1,8 +1,10 @@
 package com.sansi.acerbilgisayar.budgetpack.Activites;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -32,7 +34,6 @@ import java.util.TimerTask;
 
 public class FindPlan extends AppCompatActivity {
     final List<City> cities =new ArrayList<City>();
-
     String budget, currency, type;
     int startDay, startMonth, startYear, endDay, endMonth, endYear;
     long diff;
@@ -55,6 +56,10 @@ public class FindPlan extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.find_plan);
 
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("OPTION", "A");
+        editor.apply();
         lLayout = new LinearLayoutManager(this);
 
         rView = (RecyclerView)findViewById(R.id.recycler_view);
