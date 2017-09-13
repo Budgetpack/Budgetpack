@@ -21,6 +21,8 @@
         </activity>
         <activity android:name=".Activites.SelectOption">
         </activity>
+        <activity android:name=".Activites.SelectCity">
+        </activity>
     </application>
 
 </manifest>
