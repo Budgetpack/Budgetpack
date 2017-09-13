@@ -35,7 +35,7 @@ public class Intro extends AppIntro {
     public void onSkipPressed(Fragment currentFragment) {
         super.onSkipPressed(currentFragment);
         // Do something when users tap on Skip button.
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, SelectOption.class);
         startActivity(intent);
     }
 
@@ -43,7 +43,7 @@ public class Intro extends AppIntro {
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
         // Do something when users tap on Done button.
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, SelectOption.class);
         startActivity(intent);
     }
 
