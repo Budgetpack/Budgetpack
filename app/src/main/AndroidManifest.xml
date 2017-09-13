@@ -19,6 +19,8 @@
         <activity android:name=".Activites.MainActivity"/>
         <activity android:name=".Activites.FindPlan">
         </activity>
+        <activity android:name=".Activites.SelectOption">
+        </activity>
     </application>
 
 </manifest>
