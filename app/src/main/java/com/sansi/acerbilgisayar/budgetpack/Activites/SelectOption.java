@@ -36,7 +36,8 @@ public class SelectOption extends AppCompatActivity {
         btnDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(SelectOption.this, SelectCity.class);
+                startActivity(intent);
             }
         });
 
