@@ -1,5 +1,7 @@
 package com.sansi.acerbilgisayar.budgetpack.Adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.sansi.acerbilgisayar.budgetpack.Activites.SelectCity;
+import com.sansi.acerbilgisayar.budgetpack.Activites.ActivityPage;
 import com.sansi.acerbilgisayar.budgetpack.R;
 
 /**
@@ -31,6 +33,12 @@ public class RecyclerViewHolders extends RecyclerView.ViewHolder implements View
     public void onClick(View view) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(view.getContext());
         String optionMode = preferences.getString("OPTION", "N/A");
+        if(optionMode.equals("A")){
+            Intent intent = new Intent(itemView.getContext(), ActivityPage.class);
+            itemView.getContext().startActivity(intent);
+        }else{
+
+        }
         Toast.makeText(view.getContext(), "OPTION " +optionMode, Toast.LENGTH_SHORT).show();
     }
 }
