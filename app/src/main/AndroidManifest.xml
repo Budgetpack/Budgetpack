@@ -23,6 +23,10 @@
         </activity>
         <activity android:name=".Activites.SelectCity">
         </activity>
+        <activity android:name=".Activites.ActivityPage">
+        </activity>
+        <activity android:name=".Activites.Main2Activity">
+        </activity>
     </application>
 
 </manifest>
