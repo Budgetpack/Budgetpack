@@ -7,17 +7,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.sansi.acerbilgisayar.budgetpack.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link OptionbInputFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link OptionbInputFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class OptionbInputFragment extends Fragment {
     /*
     // TODO: Rename parameter arguments, choose names that match
@@ -92,10 +87,27 @@ public class OptionbInputFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
     */
+    private TextView cityName;
+    CitySelectFragment.DataCommunication mCallback;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_optionb_input, container, false);
+        View view = inflater.inflate(R.layout.fragment_optionb_input, container, false);
+        cityName = (TextView) view.findViewById(R.id.cityName);
+        cityName.setText(mCallback.getCityName());
+        return view;
+    }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            mCallback = (CitySelectFragment.DataCommunication) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement DataCommunication");
+        }
     }
 }
