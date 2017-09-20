@@ -1,13 +1,16 @@
 package com.sansi.acerbilgisayar.budgetpack.Adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.sansi.acerbilgisayar.budgetpack.Activites.SelectCity;
 import com.sansi.acerbilgisayar.budgetpack.Classes.City;
+import com.sansi.acerbilgisayar.budgetpack.Fragments.CitySelectFragment;
 import com.sansi.acerbilgisayar.budgetpack.R;
 
 import java.util.ArrayList;
@@ -67,6 +70,7 @@ public class ListViewAdapter extends BaseAdapter {
         }
         // Set the results into TextViews
         holder.name.setText(cityNamesList.get(position).getName());
+
         return view;
     }
 

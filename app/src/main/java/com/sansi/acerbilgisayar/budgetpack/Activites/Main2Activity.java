@@ -6,8 +6,9 @@ import android.os.Bundle;
 import com.sansi.acerbilgisayar.budgetpack.Fragments.CitySelectFragment;
 import com.sansi.acerbilgisayar.budgetpack.R;
 
-public class Main2Activity extends AppCompatActivity {
+public class Main2Activity extends AppCompatActivity implements CitySelectFragment.DataCommunication{
 
+    private String name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +35,15 @@ public class Main2Activity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_container, firstFragment).commit();
         }
+    }
+
+    @Override
+    public String getCityName(){
+        return name;
+    }
+    @Override
+    public void setCityName(String x){
+        this.name=x;
     }
 }
 
