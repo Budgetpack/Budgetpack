@@ -23,7 +23,7 @@
 
 
     <TextView
-        android:id="@+id/welcomeTxt"
+        android:id="@+id/cityName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="WELCOME"
@@ -48,7 +48,7 @@
         tools:layout_editor_absoluteY="83dp"
         android:textColor="@color/mainText"
         android:layout_marginTop="46dp"
-        android:layout_below="@+id/welcomeTxt"
+        android:layout_below="@+id/cityName"
         android:layout_alignEnd="@+id/findBtn"/>
 
     <Button
@@ -88,7 +88,7 @@
         app:srcCompat="@drawable/date"
         android:layout_marginTop="23dp"
         android:layout_below="@+id/textView1"
-        android:layout_toEndOf="@+id/welcomeTxt"/>
+        android:layout_toEndOf="@+id/cityName"/>
 
     <ImageButton
         android:id="@+id/startDateButton"
@@ -96,7 +96,7 @@
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/date"
         android:layout_alignTop="@+id/endDateButton"
-        android:layout_toStartOf="@+id/welcomeTxt"/>
+        android:layout_toStartOf="@+id/cityName"/>
 
     <TextView
         android:id="@+id/startDateTxt"
