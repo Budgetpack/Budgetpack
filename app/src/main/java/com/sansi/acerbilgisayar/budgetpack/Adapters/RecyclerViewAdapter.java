@@ -2,6 +2,7 @@ package com.sansi.acerbilgisayar.budgetpack.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
     public void onBindViewHolder(RecyclerViewHolders holder, int position) {
         holder.countryName.setText(itemList.get(position).getName());
         //holder.countryPhoto.setImageResource(itemList.get(position).getPhoto());
+        holder.cityName = itemList.get(position).getName();
         switch(itemList.get(position).getName()){
             /*case "Barcelona":
                 holder.countryPhoto.setImageResource(R.drawable.walks_barcelona_1);

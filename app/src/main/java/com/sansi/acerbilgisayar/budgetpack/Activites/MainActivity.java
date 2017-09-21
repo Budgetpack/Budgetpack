@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,16 +39,22 @@ public class MainActivity extends AppCompatActivity{
     ImageButton endDateButton;
     TextView startDateText;
     TextView endDateText;
+    TextView selectedCityText;
+    ImageView background;
 
     private String[] currencies = {"USD", "TRY", "EUR"};
     private String[] types = {"Does not matter", "Nightlife", "Historical", "Cuisine", "Leisure", "Religion", "Sightseeing", "Cultural"};
     private String str;
     private String curr;
     private String type;
+    private String OPTION;
+    private String cityName;
 
     private int startYear, startMonth, startDay;
     private int endYear, endMonth, endDay;
     long diffInDays;
+
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +63,11 @@ public class MainActivity extends AppCompatActivity{
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        final SharedPreferences.Editor editor = preferences.edit();
+        OPTION = preferences.getString("OPTION", "N/A");
+
 
         welcomeText = (TextView) findViewById(R.id.cityName);
         budgetText = (EditText) findViewById(R.id.budgetTxt);
@@ -66,7 +78,15 @@ public class MainActivity extends AppCompatActivity{
         endDateText = (TextView) findViewById(R.id.endDateTxt);
         startDateButton = (ImageButton) findViewById(R.id.startDateButton);
         endDateButton = (ImageButton) findViewById(R.id.endDateButton);
+        selectedCityText = (TextView) findViewById(R.id.selectedCityName);
+        background = (ImageView) findViewById(R.id.bgImage);
 
+        if(OPTION.equals("B")){
+            Bundle extras = getIntent().getExtras();
+            cityName = extras.getString("city");
+            selectedCityText.setText("Selected City:"+cityName);
+            background.setImageDrawable(getResources().getDrawable(R.drawable.travel1));
+        }
 
         welcomeText.setText("Welcome to Budgetpack!");
         calendar = Calendar.getInstance();
@@ -77,9 +97,7 @@ public class MainActivity extends AppCompatActivity{
 
                 str = budgetText.getText().toString();
 
-                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                String myString = preferences.getString("OPTION", "N/A");
-                Log.e("OPTION:",""+myString);
+                Log.e("OPTION:",""+OPTION);
                 /*Log.e("startdate:",""+calendar1.getTime());
                 Log.e("enddate:",""+calendar2.getTime());*/
                 //Log.e("diff:",""+diffInDays);
@@ -92,7 +110,14 @@ public class MainActivity extends AppCompatActivity{
 
                 if(inputCheck(str, startDay, endDay)) {
 
-                    Intent intent = new Intent(MainActivity.this, FindPlan.class);
+                    if(OPTION.equals("A")) {
+                        intent = new Intent(MainActivity.this, FindPlan.class);
+                    }else if(OPTION.equals("B")){
+                        intent = new Intent(MainActivity.this, ActivityPage.class);
+                        intent.putExtra("city",cityName);
+                    }
+                    editor.putString("budget",str);
+                    editor.apply();
                     intent.putExtra("budget", str);
                     intent.putExtra("currency", curr);
                     intent.putExtra("type", type);

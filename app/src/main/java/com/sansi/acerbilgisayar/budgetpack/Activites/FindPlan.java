@@ -32,7 +32,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class FindPlan extends AppCompatActivity {
+public class FindPlan extends AppCompatActivity{
     final List<City> cities =new ArrayList<City>();
     String budget, currency, type;
     int startDay, startMonth, startYear, endDay, endMonth, endYear;
@@ -55,7 +55,6 @@ public class FindPlan extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.find_plan);
-
 
         lLayout = new LinearLayoutManager(this);
 
@@ -164,5 +163,6 @@ public class FindPlan extends AppCompatActivity {
             return false;
         }
     }
+
 
 }
