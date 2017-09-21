@@ -21,6 +21,7 @@ public class RecyclerViewHolders extends RecyclerView.ViewHolder implements View
 
     public TextView countryName;
     public ImageView countryPhoto;
+    public String cityName;
 
     public RecyclerViewHolders(View itemView) {
         super(itemView);
@@ -35,10 +36,11 @@ public class RecyclerViewHolders extends RecyclerView.ViewHolder implements View
         String optionMode = preferences.getString("OPTION", "N/A");
         if(optionMode.equals("A")){
             Intent intent = new Intent(itemView.getContext(), ActivityPage.class);
+            intent.putExtra("city",cityName);
             itemView.getContext().startActivity(intent);
         }else{
 
         }
-        Toast.makeText(view.getContext(), "OPTION " +optionMode, Toast.LENGTH_SHORT).show();
+        Toast.makeText(view.getContext(), "OPTION " +cityName, Toast.LENGTH_SHORT).show();
     }
 }

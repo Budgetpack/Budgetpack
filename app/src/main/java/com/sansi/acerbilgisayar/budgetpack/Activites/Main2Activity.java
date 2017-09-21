@@ -28,43 +28,6 @@ import java.util.TimerTask;
 
 public class Main2Activity extends AppCompatActivity implements SearchView.OnQueryTextListener/*implements CitySelectFragment.DataCommunication*/{
 
-   /* private String name;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
-        // Check that the activity is using the layout version with
-        // the fragment_container FrameLayout
-        if (findViewById(R.id.fragment_container) != null) {
-
-            // However, if we're being restored from a previous state,
-            // then we don't need to do anything and should return or else
-            // we could end up with overlapping fragments.
-            if (savedInstanceState != null) {
-                return;
-            }
-
-            // Create a new Fragment to be placed in the activity layout
-            CitySelectFragment firstFragment = new CitySelectFragment();
-
-            // In case this activity was started with special instructions from an
-            // Intent, pass the Intent's extras to the fragment as arguments
-            firstFragment.setArguments(getIntent().getExtras());
-
-            // Add the fragment to the 'fragment_container' FrameLayout
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_container, firstFragment).commit();
-        }
-    }
-
-    @Override
-    public String getCityName(){
-        return name;
-    }
-    @Override
-    public void setCityName(String x){
-        this.name=x;
-    }*/
     ListView list;
     ListViewAdapter adapter;
     SearchView editsearch;
@@ -106,6 +69,7 @@ public class Main2Activity extends AppCompatActivity implements SearchView.OnQue
                Log.e("onClick:",""+s);
                arraylist = new ArrayList<City>();
                Intent intent = new Intent(Main2Activity.this, MainActivity.class);
+               intent.putExtra("city",s);
                startActivity(intent);
 
 
