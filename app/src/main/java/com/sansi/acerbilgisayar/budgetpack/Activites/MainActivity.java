@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity{
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
-        welcomeText = (TextView) findViewById(R.id.welcomeTxt);
+        welcomeText = (TextView) findViewById(R.id.cityName);
         budgetText = (EditText) findViewById(R.id.budgetTxt);
         findplanButton = (Button) findViewById(R.id.findBtn);
         currencySpinner = (Spinner) findViewById(R.id.spinner);
@@ -77,7 +77,9 @@ public class MainActivity extends AppCompatActivity{
 
                 str = budgetText.getText().toString();
 
-
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                String myString = preferences.getString("OPTION", "N/A");
+                Log.e("OPTION:",""+myString);
                 /*Log.e("startdate:",""+calendar1.getTime());
                 Log.e("enddate:",""+calendar2.getTime());*/
                 //Log.e("diff:",""+diffInDays);

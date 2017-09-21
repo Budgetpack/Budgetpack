@@ -56,10 +56,7 @@ public class FindPlan extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.find_plan);
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("OPTION", "A");
-        editor.apply();
+
         lLayout = new LinearLayoutManager(this);
 
         rView = (RecyclerView)findViewById(R.id.recycler_view);
