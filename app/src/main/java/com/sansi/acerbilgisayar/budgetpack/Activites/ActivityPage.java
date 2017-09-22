@@ -1,5 +1,6 @@
 package com.sansi.acerbilgisayar.budgetpack.Activites;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,6 +12,9 @@ import android.os.Bundle;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.sansi.acerbilgisayar.budgetpack.R;
@@ -24,6 +28,9 @@ public class ActivityPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_page);
 
         Bundle b = getIntent().getExtras();
@@ -36,7 +43,7 @@ public class ActivityPage extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(false);
 
         cityImage = (ImageView) findViewById(R.id.city_id);
 
@@ -148,5 +155,15 @@ public class ActivityPage extends AppCompatActivity {
         }
     }
 
+   /* @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        if (menuItem.getItemId() == android.R.id.home) {
+            Intent intent = new Intent(ActivityPage.this, FindPlan.class);
+            startActivity(intent);
+            finish();
+        }
+        return super.onOptionsItemSelected(menuItem);
+    }
+*/
 }
 
