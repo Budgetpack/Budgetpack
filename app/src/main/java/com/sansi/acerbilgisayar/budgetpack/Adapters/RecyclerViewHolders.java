@@ -38,9 +38,7 @@ public class RecyclerViewHolders extends RecyclerView.ViewHolder implements View
             Intent intent = new Intent(itemView.getContext(), ActivityPage.class);
             intent.putExtra("city",cityName);
             itemView.getContext().startActivity(intent);
-        }else{
-
         }
-        Toast.makeText(view.getContext(), "OPTION " +cityName, Toast.LENGTH_SHORT).show();
+
     }
 }
