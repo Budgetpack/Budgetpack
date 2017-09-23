@@ -12,10 +12,15 @@ import android.os.Bundle;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.sansi.acerbilgisayar.budgetpack.R;
 
@@ -53,6 +58,20 @@ public class ActivityPage extends AppCompatActivity {
         dynamicToolbarColor();
         toolbarTextAppernce();
         cityPicturePicker();
+
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linear);
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
+
+
+
+        for(int i=1; i<=preferences.getLong("diff",0); i++){
+            View childLayout = inflater.inflate(R.layout.card_layout, (ViewGroup) findViewById(R.id.child_id),false);
+            linearLayout.addView(childLayout);
+            TextView dayText = (TextView) childLayout.findViewById(R.id.daytag);
+            dayText.setText("Day "+i);
+        }
+
+
 
     }
     private void dynamicToolbarColor() {
@@ -155,15 +174,6 @@ public class ActivityPage extends AppCompatActivity {
         }
     }
 
-   /* @Override
-    public boolean onOptionsItemSelected(MenuItem menuItem) {
-        if (menuItem.getItemId() == android.R.id.home) {
-            Intent intent = new Intent(ActivityPage.this, FindPlan.class);
-            startActivity(intent);
-            finish();
-        }
-        return super.onOptionsItemSelected(menuItem);
-    }
-*/
+
 }
 

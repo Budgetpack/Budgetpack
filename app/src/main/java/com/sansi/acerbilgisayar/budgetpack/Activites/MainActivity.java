@@ -117,7 +117,8 @@ public class MainActivity extends AppCompatActivity{
                         intent.putExtra("city",cityName);
                     }
                     editor.putString("budget",str);
-                    editor.apply();
+
+
                     intent.putExtra("budget", str);
                     intent.putExtra("currency", curr);
                     intent.putExtra("type", type);
@@ -131,6 +132,7 @@ public class MainActivity extends AppCompatActivity{
                     if(diffInDays==0){
                         diffInDays++;
                         intent.putExtra("diff", diffInDays);
+                        editor.putLong("diff", diffInDays);
                         startActivity(intent);
                     }
                     else if(diffInDays < 0){
@@ -138,8 +140,10 @@ public class MainActivity extends AppCompatActivity{
                         msg.show();
                     }else {
                         intent.putExtra("diff", diffInDays);
+                        editor.putLong("diff", diffInDays);
                         startActivity(intent);
                     }
+                    editor.apply();
                 }
                 /*SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 SharedPreferences.Editor editor = preferences.edit();
