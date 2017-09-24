@@ -1,5 +1,6 @@
 package com.sansi.acerbilgisayar.budgetpack.Activites;
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -29,6 +30,8 @@ public class ActivityPage extends AppCompatActivity {
 
     private CollapsingToolbarLayout collapsingToolbarLayout = null;
     ImageView cityImage;
+    TextView dayText,contentText;
+    View childLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,23 +64,28 @@ public class ActivityPage extends AppCompatActivity {
 
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linear);
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
-
+        childLayout = inflater.inflate(R.layout.card_layout, (ViewGroup) findViewById(R.id.child_id),false);
+        linearLayout.addView(childLayout);
+        dayText = (TextView) childLayout.findViewById(R.id.daytag);
+        dayText.setText("Details\nBudget:"+preferences.getString("budget","N/A"));
 
 
         for(int i=1; i<=preferences.getLong("diff",0); i++){
-            View childLayout = inflater.inflate(R.layout.card_layout, (ViewGroup) findViewById(R.id.child_id),false);
+            childLayout = inflater.inflate(R.layout.card_layout, (ViewGroup) findViewById(R.id.child_id),false);
             linearLayout.addView(childLayout);
-            TextView dayText = (TextView) childLayout.findViewById(R.id.daytag);
+            dayText = (TextView) childLayout.findViewById(R.id.daytag);
             dayText.setText("Day "+i);
         }
+        dayText = (TextView) childLayout.findViewById(R.id.daytag);
+        contentText = (TextView) childLayout.findViewById(R.id.contentText);
 
 
 
     }
     private void dynamicToolbarColor() {
-
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(),
-                R.drawable.rome);
+                R.drawable.walks_barcelona_1);
+
         Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
 
             @Override
@@ -174,6 +182,31 @@ public class ActivityPage extends AppCompatActivity {
         }
     }
 
+    public void handleOnClick(View view) {
+        switch(view.getId()){
+            case R.id.daytag:
+            if (contentText.getVisibility() == View.GONE) {
+                // it's collapsed - expand it
+                contentText.setVisibility(View.VISIBLE);
 
-}
+            } else {
+                // it's expanded - collapse it
+                contentText.setVisibility(View.GONE);
+
+            }
+
+            ObjectAnimator animation = ObjectAnimator.ofInt(contentText, "maxLines", contentText.getMaxLines());
+            animation.setDuration(200).start();
+                break;
+            default:
+                Log.e("onClick", "switchcase");
+                break;
+        }
+
+
+    }
+    }
+
+
+
 
