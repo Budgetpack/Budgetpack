@@ -16,12 +16,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/daytag"
+            android:onClick="handleOnClick"
+            android:clickable="true"
             android:text="Lorem ipsum"
             android:textSize="20sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/contentText"
+            android:visibility="gone"
             android:text="content"
             android:textSize="18sp" />
 
