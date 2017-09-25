@@ -1,6 +1,7 @@
 package com.sansi.acerbilgisayar.budgetpack.Activites;
 
 import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -29,6 +30,8 @@ import com.sansi.acerbilgisayar.budgetpack.R;
 public class ActivityPage extends AppCompatActivity {
 
     private CollapsingToolbarLayout collapsingToolbarLayout = null;
+    private LinearLayout linearLayout;
+    SharedPreferences preferences;
     ImageView cityImage;
     TextView dayText,contentText;
     View childLayout;
@@ -42,7 +45,7 @@ public class ActivityPage extends AppCompatActivity {
         setContentView(R.layout.activity_page);
 
         Bundle b = getIntent().getExtras();
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         if (b != null) {
             Log.e("City Name: ", "" + b.getString("city"));
             Log.e("Budget: ", "" + preferences.getString("budget", "N/A"));
@@ -62,22 +65,26 @@ public class ActivityPage extends AppCompatActivity {
         toolbarTextAppernce();
         cityPicturePicker();
 
-        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linear);
+        linearLayout = (LinearLayout) findViewById(R.id.linear);
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
         childLayout = inflater.inflate(R.layout.card_layout, (ViewGroup) findViewById(R.id.child_id),false);
         linearLayout.addView(childLayout);
         dayText = (TextView) childLayout.findViewById(R.id.daytag);
+        contentText = (TextView) childLayout.findViewById(R.id.contentText);
+        contentText.setText("");
         dayText.setText("Details\nBudget:"+preferences.getString("budget","N/A"));
 
 
-        for(int i=1; i<=preferences.getLong("diff",0); i++){
+        for(int i=0; i<=preferences.getLong("diff",0); i++){
             childLayout = inflater.inflate(R.layout.card_layout, (ViewGroup) findViewById(R.id.child_id),false);
             linearLayout.addView(childLayout);
             dayText = (TextView) childLayout.findViewById(R.id.daytag);
-            dayText.setText("Day "+i);
+            dayText.setId(i);
+            int j = i+1;
+            dayText.setText("Day "+j);
         }
-        dayText = (TextView) childLayout.findViewById(R.id.daytag);
-        contentText = (TextView) childLayout.findViewById(R.id.contentText);
+
+
 
 
 
@@ -185,27 +192,20 @@ public class ActivityPage extends AppCompatActivity {
     public void handleOnClick(View view) {
         switch(view.getId()){
             case R.id.daytag:
-            if (contentText.getVisibility() == View.GONE) {
-                // it's collapsed - expand it
-                contentText.setVisibility(View.VISIBLE);
-
-            } else {
-                // it's expanded - collapse it
-                contentText.setVisibility(View.GONE);
-
-            }
-
-            ObjectAnimator animation = ObjectAnimator.ofInt(contentText, "maxLines", contentText.getMaxLines());
-            animation.setDuration(200).start();
+                Log.e("day: ","blabla");
                 break;
             default:
-                Log.e("onClick", "switchcase");
+                Intent intent = new Intent(ActivityPage.this, ActivityDetails.class);
+                intent.putExtra("day",(view.getId())+1 );
+                startActivity(intent);
+                Log.e("onClick", "switchcase"+view.getId());
                 break;
         }
 
 
     }
-    }
+
+}
 
 
 
