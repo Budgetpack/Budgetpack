@@ -40,7 +40,7 @@ public class ActivityDetails extends AppCompatActivity {
         dayText.setText("Day "+b.get("day").toString());
 
         for(int i=0; i<=5; i++){
-            childLayout = inflater.inflate(R.layout.card_layout, (ViewGroup) findViewById(R.id.child_id),false);
+            childLayout = inflater.inflate(R.layout.card_layout_details, (ViewGroup) findViewById(R.id.child_id),false);
             linearLayout.addView(childLayout);
             dayText = (TextView) childLayout.findViewById(R.id.daytag);
             contentText = (TextView) childLayout.findViewById(R.id.contentText);
