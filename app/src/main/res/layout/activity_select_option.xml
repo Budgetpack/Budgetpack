@@ -14,9 +14,9 @@
             android:id="@+id/buttonTop"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/btnbg3"
-            android:text="Button"/>
+            android:layout_weight="0.5"
+            android:background="@drawable/button1rsz"
+            android:text="Let us find you a city! "/>
     </LinearLayout>
 
     <LinearLayout android:layout_width="fill_parent"
@@ -28,9 +28,9 @@
             android:id="@+id/buttonDown"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/btnbg2"
-            android:text="Button"/>
+            android:layout_weight="0.5"
+            android:background="@drawable/button2rsz"
+            android:text="Already there? Let us find you activites!"/>
     </LinearLayout>
 
 
