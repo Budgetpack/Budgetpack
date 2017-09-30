@@ -64,4 +64,8 @@ public class ActivityDetails extends AppCompatActivity {
 
 
     }
+    private void duduboi(){
+        //
+        //
+    }
 }
