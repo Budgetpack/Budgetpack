@@ -24,7 +24,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.sansi.acerbilgisayar.budgetpack.Classes.City;
+import com.sansi.acerbilgisayar.budgetpack.Classes.Event;
 import com.sansi.acerbilgisayar.budgetpack.R;
+
+import java.util.ArrayList;
 
 
 public class ActivityPage extends AppCompatActivity {
@@ -32,9 +42,13 @@ public class ActivityPage extends AppCompatActivity {
     private CollapsingToolbarLayout collapsingToolbarLayout = null;
     private LinearLayout linearLayout;
     SharedPreferences preferences;
+    ArrayList<Event> arraylist = new ArrayList<Event>();
     ImageView cityImage;
     TextView dayText,contentText;
     View childLayout;
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,9 +98,7 @@ public class ActivityPage extends AppCompatActivity {
             dayText.setText("Day "+j);
         }
 
-
-
-
+        eventPicker();
 
     }
     private void dynamicToolbarColor() {
@@ -202,6 +214,45 @@ public class ActivityPage extends AppCompatActivity {
                 break;
         }
 
+
+    }
+
+    public void eventPicker(){
+        Log.e("TEST","DUDUBOI");
+        long test = 0;
+        final Long p = Long.valueOf(preferences.getString("budget","0"))/preferences.getLong("diff",test);
+        Log.e("DailyBudget ",""+p);
+
+        Bundle b = getIntent().getExtras();
+        String cityName = b.getString("city");
+        final int weight= 100;
+        Log.e("test","fireabase öncesi"+b.getString("city"));
+        Query myQuery = myRef.child("Cities").child(cityName).child("activities");
+        myQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    Long eventWeight = Long.valueOf(weight) - Long.valueOf(child.child("price").getValue().toString());
+                    int totalPrice = 0;
+                    //Log.e("test","firebase içi");
+                    while(totalPrice <= p/4){
+                        int index=0;
+                        arraylist.add(new Event(child.child("name").getValue().toString(), child.child("characteristic").getValue().toString(), Long.valueOf(child.child("price").getValue().toString())));
+                        //TODO : if ekle
+                        arraylist.get(index).setSelected(true);
+                        totalPrice += Long.valueOf(child.child("price").getValue().toString());
+                        index++;
+                    }
+                    Log.e("child price",""+child.child("price").getValue());
+                    Log.e("child weight",""+eventWeight);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        Log.e("test","firebase sonraso");
 
     }
 

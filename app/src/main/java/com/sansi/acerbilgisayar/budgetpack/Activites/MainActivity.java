@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity{
             Bundle extras = getIntent().getExtras();
             cityName = extras.getString("city");
             selectedCityText.setText("Selected City:"+cityName);
-            background.setImageDrawable(getResources().getDrawable(R.drawable.travel1));
+            background.setImageDrawable(getResources().getDrawable(R.drawable.optionbbg));
         }
 
         welcomeText.setText("Welcome to Budgetpack!");
@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity{
                         intent.putExtra("city",cityName);
                     }
                     editor.putString("budget",str);
+
 
 
                     intent.putExtra("budget", str);
