@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity{
                         intent.putExtra("city",cityName);
                     }
                     editor.putString("budget",str);
+                    editor.putString("char",type);
 
 
 

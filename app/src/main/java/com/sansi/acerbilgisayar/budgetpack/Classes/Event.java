@@ -10,11 +10,12 @@ public class Event {
     private Long price;
     private boolean isSelected=false;
 
-    public Event(String name, String characteristic, Long price){
+    public Event(String name, String characteristic, Long price, boolean isSelected){
         super();
         this.name= name;
         this.characteristic = characteristic;
         this.price = price;
+        this.isSelected = isSelected;
     }
 
     public String getName() {
