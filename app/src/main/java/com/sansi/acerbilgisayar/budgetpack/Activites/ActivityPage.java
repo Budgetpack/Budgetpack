@@ -35,6 +35,9 @@ import com.sansi.acerbilgisayar.budgetpack.Classes.Event;
 import com.sansi.acerbilgisayar.budgetpack.R;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class ActivityPage extends AppCompatActivity {
@@ -42,7 +45,8 @@ public class ActivityPage extends AppCompatActivity {
     private CollapsingToolbarLayout collapsingToolbarLayout = null;
     private LinearLayout linearLayout;
     SharedPreferences preferences;
-    ArrayList<Event> arraylist = new ArrayList<Event>();
+    List<Event> arraylist = new ArrayList<Event>();
+    List<Event> tempList = new ArrayList<Event>();
     ImageView cityImage;
     TextView dayText,contentText;
     View childLayout;
@@ -99,6 +103,8 @@ public class ActivityPage extends AppCompatActivity {
         }
 
         eventPicker();
+
+
 
     }
     private void dynamicToolbarColor() {
@@ -227,24 +233,33 @@ public class ActivityPage extends AppCompatActivity {
         String cityName = b.getString("city");
         final int weight= 100;
         Log.e("test","fireabase öncesi"+b.getString("city"));
-        Query myQuery = myRef.child("Cities").child(cityName).child("activities");
+        Query myQuery = myRef.child("Cities").child(cityName).child("activities").orderByChild("price");
         myQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    Long eventWeight = Long.valueOf(weight) - Long.valueOf(child.child("price").getValue().toString());
+                   // Long eventWeight = Long.valueOf(weight) - Long.valueOf(child.child("price").getValue().toString());
+                    String characteristic = child.child("characteristic").getValue().toString();
+                    //Long price =  ;
+                    String eventName = child.child("name").getValue().toString();
+                    Log.e("child price",""+child.child("price").getValue());
                     int totalPrice = 0;
                     //Log.e("test","firebase içi");
                     while(totalPrice <= p/4){
-                        int index=0;
-                        arraylist.add(new Event(child.child("name").getValue().toString(), child.child("characteristic").getValue().toString(), Long.valueOf(child.child("price").getValue().toString())));
-                        //TODO : if ekle
-                        arraylist.get(index).setSelected(true);
+                        //TODO: index e bak
+                        int index=1;
+
+                        if(preferences.getString("char","NULL").equals(characteristic)     ){
+                            arraylist.add(new Event(eventName, characteristic, Long.valueOf(child.child("price").getValue().toString()), true));
+                            tempList.add(new Event(eventName, characteristic, Long.valueOf(child.child("price").getValue().toString()), true));
+                        }
+                        if(arraylist.get(index).isSelected()== true){
+                            arraylist.remove(index);
+                        }
                         totalPrice += Long.valueOf(child.child("price").getValue().toString());
                         index++;
                     }
-                    Log.e("child price",""+child.child("price").getValue());
-                    Log.e("child weight",""+eventWeight);
+
                 }
             }
             @Override
@@ -253,6 +268,17 @@ public class ActivityPage extends AppCompatActivity {
             }
         });
         Log.e("test","firebase sonraso");
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Log.e("test","arraylist size"+tempList.size());
+                for(int i = 1; i<=tempList.size(); i++ ){
+                    Log.e("ARRAY ITEMII",""+tempList.get(i-1).getName());
+                    Log.e("ARRAY CHARACTERISTIC",""+tempList.get(i-1).getCharacteristic());
+                }
+            }
+        }, 1000);
+
 
     }
 
