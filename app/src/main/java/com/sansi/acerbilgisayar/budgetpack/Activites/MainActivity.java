@@ -115,6 +115,7 @@ public class MainActivity extends AppCompatActivity{
                     }else if(OPTION.equals("B")){
                         intent = new Intent(MainActivity.this, ActivityPage.class);
                         intent.putExtra("city",cityName);
+                        editor.putString("city",cityName);
                     }
                     editor.putString("budget",str);
                     editor.putString("char",type);
@@ -131,7 +132,7 @@ public class MainActivity extends AppCompatActivity{
                     intent.putExtra("endmonth", endMonth);
                     intent.putExtra("endyear", endYear);
                     diffInDays = (calendar2.getTimeInMillis() - calendar1.getTimeInMillis() ) / (1000 * 60 * 60 * 24) ;
-                    if(diffInDays==0){
+                    if(diffInDays==0 ){
                         diffInDays++;
                         intent.putExtra("diff", diffInDays);
                         editor.putLong("diff", diffInDays);
