@@ -56,6 +56,9 @@ public class ActivityPage extends AppCompatActivity {
     DatabaseReference myRef = database.getReference();
 
     int totalPrice = 0;
+    int MAX_EVENT = 12;
+    int numOfEvents=0;
+    int index=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -237,6 +240,7 @@ public class ActivityPage extends AppCompatActivity {
         String cityName = b.getString("city");
         final int weight= 100;
 
+
         Log.e("test","fireabase öncesi"+b.getString("city"));
         Query myQuery = myRef.child("Cities").child(cityName).child("activities").orderByChild("price");
         myQuery.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -244,27 +248,36 @@ public class ActivityPage extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     String characteristic = child.child("characteristic").getValue().toString();
-                    //Long price =  ;
                     String eventName = child.child("name").getValue().toString();
                     Log.e("child price",""+child.child("price").getValue());
                     Event event = new Event(eventName, characteristic, Long.valueOf(child.child("price").getValue().toString()), true);
                     //Log.e("test","firebase içi");
-                    int index=0;
+
+
                     //TODO : main karakteristik eventleri eklendikten sonra bütçe izin veriyorsa diğer eventleri ekle
+                    //TODO : her gün için loop
+
                     if(preferences.getString("char","NULL").equals(characteristic) && !arraylist.contains(event) )   {
                         arraylist.add(event);
+                        numOfEvents++;
                         totalPrice += Long.valueOf(child.child("price").getValue().toString());
-                        if(totalPrice > p){
-                            arraylist.remove(index);
+                        index++;
+                        if(totalPrice > p || numOfEvents > 2){
+                            arraylist.remove(index-1);
+                            numOfEvents--;
                             break;
                         }
-
                     }
-
-
+//                    if(numOfEvents < MAX_EVENT && totalPrice < p ){
+//                        if(!preferences.getString("char","NULL").equals(characteristic) && !arraylist.contains(event)){
+//                            arraylist.add(event);
+//                            totalPrice += Long.valueOf(child.child("price").getValue().toString());
+//                        }
+//                    }
+                    Log.e("test","eventname "+eventName);
+                    Log.e("test","index "+index);
+                    Log.e("test","numofevents "+numOfEvents);
                     Log.e("test","totalprice: "+totalPrice);
-                    index++;
-
 
                 }
             }
@@ -278,12 +291,13 @@ public class ActivityPage extends AppCompatActivity {
             @Override
             public void run() {
                 Log.e("test","arraylist size"+arraylist.size() );
-                for(int i = 0; i<=arraylist.size()-1; i++ ){
+                for(int i = 0; i<arraylist.size(); i++ ){
                     Log.e("ARRAY ITEMII",""+arraylist.get(i).getName() );
                     Log.e("ARRAY CHARACTERISTIC",""+arraylist.get(i).getCharacteristic() );
+
                 }
             }
-        }, 1000);
+        }, 2000);
 
 
     }

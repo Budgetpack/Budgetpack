@@ -8,6 +8,7 @@ public class Event {
     private String name;
     private String characteristic;
     private Long price;
+    private String dayInterval;
     private boolean isSelected=false;
 
     public Event(String name, String characteristic, Long price, boolean isSelected){
@@ -16,6 +17,14 @@ public class Event {
         this.characteristic = characteristic;
         this.price = price;
         this.isSelected = isSelected;
+    }
+
+    public String getDayInterval() {
+        return dayInterval;
+    }
+
+    public void setDayInterval(String dayInterval) {
+        this.dayInterval = dayInterval;
     }
 
     public String getName() {
