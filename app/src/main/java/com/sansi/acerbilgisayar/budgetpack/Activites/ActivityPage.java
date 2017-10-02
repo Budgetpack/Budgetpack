@@ -35,6 +35,7 @@ import com.sansi.acerbilgisayar.budgetpack.Classes.Event;
 import com.sansi.acerbilgisayar.budgetpack.R;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -53,6 +54,11 @@ public class ActivityPage extends AppCompatActivity {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
+
+    int totalPrice = 0;
+    int MAX_EVENT = 12;
+    int numOfEvents=0;
+    int index=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,13 +99,14 @@ public class ActivityPage extends AppCompatActivity {
         dayText.setText("Details\nBudget:"+preferences.getString("budget","N/A"));
 
 
-        for(int i=0; i<=preferences.getLong("diff",0); i++){
+        for(int i=0; i<=preferences.getLong("diff",0)-1; i++){
             childLayout = inflater.inflate(R.layout.card_layout, (ViewGroup) findViewById(R.id.child_id),false);
             linearLayout.addView(childLayout);
             dayText = (TextView) childLayout.findViewById(R.id.daytag);
             dayText.setId(i);
             int j = i+1;
             dayText.setText("Day "+j);
+
         }
 
         eventPicker();
@@ -232,33 +239,45 @@ public class ActivityPage extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
         String cityName = b.getString("city");
         final int weight= 100;
+
+
         Log.e("test","fireabase öncesi"+b.getString("city"));
         Query myQuery = myRef.child("Cities").child(cityName).child("activities").orderByChild("price");
         myQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
-                   // Long eventWeight = Long.valueOf(weight) - Long.valueOf(child.child("price").getValue().toString());
                     String characteristic = child.child("characteristic").getValue().toString();
-                    //Long price =  ;
                     String eventName = child.child("name").getValue().toString();
                     Log.e("child price",""+child.child("price").getValue());
-                    int totalPrice = 0;
+                    Event event = new Event(eventName, characteristic, Long.valueOf(child.child("price").getValue().toString()), true);
                     //Log.e("test","firebase içi");
-                    while(totalPrice <= p/4){
-                        //TODO: index e bak
-                        int index=1;
 
-                        if(preferences.getString("char","NULL").equals(characteristic)     ){
-                            arraylist.add(new Event(eventName, characteristic, Long.valueOf(child.child("price").getValue().toString()), true));
-                            tempList.add(new Event(eventName, characteristic, Long.valueOf(child.child("price").getValue().toString()), true));
-                        }
-                        if(arraylist.get(index).isSelected()== true){
-                            arraylist.remove(index);
-                        }
+
+                    //TODO : main karakteristik eventleri eklendikten sonra bütçe izin veriyorsa diğer eventleri ekle
+                    //TODO : her gün için loop
+
+                    if(preferences.getString("char","NULL").equals(characteristic) && !arraylist.contains(event) )   {
+                        arraylist.add(event);
+                        numOfEvents++;
                         totalPrice += Long.valueOf(child.child("price").getValue().toString());
                         index++;
+                        if(totalPrice > p || numOfEvents > 2){
+                            arraylist.remove(index-1);
+                            numOfEvents--;
+                            break;
+                        }
                     }
+//                    if(numOfEvents < MAX_EVENT && totalPrice < p ){
+//                        if(!preferences.getString("char","NULL").equals(characteristic) && !arraylist.contains(event)){
+//                            arraylist.add(event);
+//                            totalPrice += Long.valueOf(child.child("price").getValue().toString());
+//                        }
+//                    }
+                    Log.e("test","eventname "+eventName);
+                    Log.e("test","index "+index);
+                    Log.e("test","numofevents "+numOfEvents);
+                    Log.e("test","totalprice: "+totalPrice);
 
                 }
             }
@@ -271,13 +290,14 @@ public class ActivityPage extends AppCompatActivity {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                Log.e("test","arraylist size"+tempList.size());
-                for(int i = 1; i<=tempList.size(); i++ ){
-                    Log.e("ARRAY ITEMII",""+tempList.get(i-1).getName());
-                    Log.e("ARRAY CHARACTERISTIC",""+tempList.get(i-1).getCharacteristic());
+                Log.e("test","arraylist size"+arraylist.size() );
+                for(int i = 0; i<arraylist.size(); i++ ){
+                    Log.e("ARRAY ITEMII",""+arraylist.get(i).getName() );
+                    Log.e("ARRAY CHARACTERISTIC",""+arraylist.get(i).getCharacteristic() );
+
                 }
             }
-        }, 1000);
+        }, 2000);
 
 
     }
