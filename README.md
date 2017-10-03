@@ -2,7 +2,7 @@
 "Limitless adventure with limited budget!"
 
 ## Summary
-  Budgetpack is an app that created *for* people who are on budget and want to travel the world and do as much as they can *from* people who are on budget and want to travel the world and do as much as they can.
+  Budgetpack is an app that created *for* people who are on budget and want to travel the world and do as much as they can *by* people who are on budget and want to travel the world and do as much as they can.
   
 ## Download
 <!-- Google Play link goes here -->
