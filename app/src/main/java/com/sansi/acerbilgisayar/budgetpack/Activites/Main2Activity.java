@@ -71,7 +71,7 @@ public class Main2Activity extends AppCompatActivity implements SearchView.OnQue
            @Override
            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                String s = arraylist.get(position).toString();
-               Log.e("onClick:",""+s);
+               //Log.e("onClick:",""+s);
                arraylist = new ArrayList<City>();
                Intent intent = new Intent(Main2Activity.this, MainActivity.class);
                intent.putExtra("city",s);
