@@ -55,10 +55,10 @@ public class ActivityPage extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
 
-    int totalPrice = 0;
-    int MAX_EVENT = 12;
-    int numOfEvents=0;
-    int index=0;
+    int totalPrice;
+    int MAX_EVENT;
+    int numOfEvents;
+    int index;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +67,10 @@ public class ActivityPage extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_page);
-
+        totalPrice = 0;
+        MAX_EVENT = 12;
+        numOfEvents=0;
+        index=0;
         Bundle b = getIntent().getExtras();
         preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         if (b != null) {
@@ -249,36 +252,56 @@ public class ActivityPage extends AppCompatActivity {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     String characteristic = child.child("characteristic").getValue().toString();
                     String eventName = child.child("name").getValue().toString();
-                    Log.e("child price",""+child.child("price").getValue());
+                    Log.e("child price", "" + child.child("price").getValue());
                     Event event = new Event(eventName, characteristic, Long.valueOf(child.child("price").getValue().toString()), true);
                     //Log.e("test","firebase içi");
-
-
-                    //TODO : main karakteristik eventleri eklendikten sonra bütçe izin veriyorsa diğer eventleri ekle
+                    
                     //TODO : her gün için loop
 
-                    if(preferences.getString("char","NULL").equals(characteristic) && !arraylist.contains(event) )   {
+                    if (preferences.getString("char", "NULL").equals(characteristic) && !arraylist.contains(event)) {
                         arraylist.add(event);
                         numOfEvents++;
                         totalPrice += Long.valueOf(child.child("price").getValue().toString());
                         index++;
-                        if(totalPrice > p || numOfEvents > 2){
-                            arraylist.remove(index-1);
+                        Log.e("test", "" + eventName + "," + Long.valueOf(child.child("price").getValue().toString()) + "," + characteristic + " Added");
+                        if (totalPrice > p || numOfEvents > 2) {
+                            arraylist.remove(index - 1);
+                            totalPrice -= Long.valueOf(child.child("price").getValue().toString());
                             numOfEvents--;
+                            index--;
+                            Log.e("test", "" + eventName + "," + Long.valueOf(child.child("price").getValue().toString()) + "," + characteristic + " Deleted");
                             break;
                         }
                     }
-//                    if(numOfEvents < MAX_EVENT && totalPrice < p ){
-//                        if(!preferences.getString("char","NULL").equals(characteristic) && !arraylist.contains(event)){
-//                            arraylist.add(event);
-//                            totalPrice += Long.valueOf(child.child("price").getValue().toString());
-//                        }
-//                    }
-                    Log.e("test","eventname "+eventName);
-                    Log.e("test","index "+index);
-                    Log.e("test","numofevents "+numOfEvents);
-                    Log.e("test","totalprice: "+totalPrice);
 
+
+                }
+                for (DataSnapshot child2 : dataSnapshot.getChildren()){
+                    String characteristic = child2.child("characteristic").getValue().toString();
+                    String eventName = child2.child("name").getValue().toString();
+                    Log.e("child price", "" + child2.child("price").getValue());
+                    Event event = new Event(eventName, characteristic, Long.valueOf(child2.child("price").getValue().toString()), true);
+
+                    if (/*numOfEvents >= 2 && */numOfEvents <= MAX_EVENT) {
+                        if (!preferences.getString("char", "NULL").equals(characteristic) && !arraylist.contains(event)) {
+                            arraylist.add(event);
+                            numOfEvents++;
+                            totalPrice += Long.valueOf(child2.child("price").getValue().toString());
+                            index++;
+                            Log.e("test", "" + eventName + "," + Long.valueOf(child2.child("price").getValue().toString()) + "," + characteristic + " Added");
+                            if (totalPrice > p) {
+                                arraylist.remove(index - 1);
+                                totalPrice -= Long.valueOf(child2.child("price").getValue().toString());
+                                numOfEvents--;
+                                Log.e("test", "" + eventName + "," + Long.valueOf(child2.child("price").getValue().toString()) + "," + characteristic + " Deleted");
+                                break;
+                            }
+                        }
+                    }
+//                    Log.e("test","eventname "+eventName);
+//                    Log.e("test","index "+index);
+//                    Log.e("test","numofevents "+numOfEvents);
+//                    Log.e("test","totalprice: "+totalPrice);
                 }
             }
             @Override
@@ -291,6 +314,8 @@ public class ActivityPage extends AppCompatActivity {
             @Override
             public void run() {
                 Log.e("test","arraylist size"+arraylist.size() );
+                Log.e("test","dailybudget "+p);
+                Log.e("test","totalprice "+totalPrice);
                 for(int i = 0; i<arraylist.size(); i++ ){
                     Log.e("ARRAY ITEMII",""+arraylist.get(i).getName() );
                     Log.e("ARRAY CHARACTERISTIC",""+arraylist.get(i).getCharacteristic() );
