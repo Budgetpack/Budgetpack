@@ -255,7 +255,7 @@ public class ActivityPage extends AppCompatActivity {
                     Log.e("child price", "" + child.child("price").getValue());
                     Event event = new Event(eventName, characteristic, Long.valueOf(child.child("price").getValue().toString()), true);
                     //Log.e("test","firebase içi");
-                    
+
                     //TODO : her gün için loop
 
                     if (preferences.getString("char", "NULL").equals(characteristic) && !arraylist.contains(event)) {
@@ -273,9 +273,8 @@ public class ActivityPage extends AppCompatActivity {
                             break;
                         }
                     }
-
-
                 }
+
                 for (DataSnapshot child2 : dataSnapshot.getChildren()){
                     String characteristic = child2.child("characteristic").getValue().toString();
                     String eventName = child2.child("name").getValue().toString();
