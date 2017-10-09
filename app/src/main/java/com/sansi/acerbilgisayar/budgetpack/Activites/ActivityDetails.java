@@ -12,12 +12,20 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.sansi.acerbilgisayar.budgetpack.Classes.Event;
 import com.sansi.acerbilgisayar.budgetpack.R;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ActivityDetails extends AppCompatActivity {
     private LinearLayout linearLayout;
     TextView dayText,contentText;
     View childLayout;
+    List<Event> arraylist = new ArrayList<Event>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,16 +46,37 @@ public class ActivityDetails extends AppCompatActivity {
         contentText = (TextView) childLayout.findViewById(R.id.contentText);
         contentText.setText("");
         dayText.setText("Day "+b.get("day").toString());
+        Log.e("test","outside");
+//        Intent intent = getIntent();
+//        if(intent != null && intent.hasExtra("array")){
+//            Log.e("test","inside");
+//            arraylist = intent.getParcelableExtra("array");
+//            Log.e("test","array size "+arraylist.size());
+//        }else{
+//            Log.e("test","else");
+//        }
 
-        for(int i=0; i<=5; i++){
+        String eventsList = getIntent().getStringExtra("arraylist");
+
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<Event>>(){}.getType();
+        List<Event> eventList = gson.fromJson(eventsList, type);
+//        for (Event event : eventList){
+//            Log.e("test","event name "+ event.getName());
+//        }
+
+        //for(int i=0; i< eventList.size(); i++){
+        int i = 0;
+        for (Event event : eventList){
             childLayout = inflater.inflate(R.layout.card_layout_details, (ViewGroup) findViewById(R.id.child_id),false);
             linearLayout.addView(childLayout);
             dayText = (TextView) childLayout.findViewById(R.id.daytag);
             contentText = (TextView) childLayout.findViewById(R.id.contentText);
             dayText.setId(i);
             int j = i+1;
-            dayText.setText("Activity "+j);
-            contentText.setText("blabla");
+            dayText.setText(""+event.getName());
+            contentText.setText("Price: "+event.getPrice().toString());
+            i++;
 
         }
 

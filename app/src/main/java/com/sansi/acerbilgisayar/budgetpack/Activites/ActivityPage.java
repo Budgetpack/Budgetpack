@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
@@ -30,6 +31,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 import com.sansi.acerbilgisayar.budgetpack.Classes.City;
 import com.sansi.acerbilgisayar.budgetpack.Classes.Event;
 import com.sansi.acerbilgisayar.budgetpack.R;
@@ -40,6 +42,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
+
 
 public class ActivityPage extends AppCompatActivity {
 
@@ -47,7 +51,6 @@ public class ActivityPage extends AppCompatActivity {
     private LinearLayout linearLayout;
     SharedPreferences preferences;
     List<Event> arraylist = new ArrayList<Event>();
-    List<Event> tempList = new ArrayList<Event>();
     ImageView cityImage;
     TextView dayText,contentText;
     View childLayout;
@@ -225,6 +228,10 @@ public class ActivityPage extends AppCompatActivity {
             default:
                 Intent intent = new Intent(ActivityPage.this, ActivityDetails.class);
                 intent.putExtra("day",(view.getId())+1 );
+                Gson gson = new Gson();
+                String jsonEvents = gson.toJson(arraylist);
+                intent.putExtra("arraylist", jsonEvents);
+                //intent.putExtra("array", (ArrayList<Event>)arraylist);
                 startActivity(intent);
                 Log.e("onClick", "switchcase"+view.getId());
                 break;
@@ -320,6 +327,7 @@ public class ActivityPage extends AppCompatActivity {
                     Log.e("ARRAY CHARACTERISTIC",""+arraylist.get(i).getCharacteristic() );
 
                 }
+
             }
         }, 2000);
 
